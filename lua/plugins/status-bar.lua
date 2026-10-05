@@ -3,50 +3,91 @@ return {
 		'nvim-lualine/lualine.nvim',
 		dependencies = {
 			'nvim-tree/nvim-web-devicons',
+			'franco-ruggeri/codecompanion-lualine.nvim'
 		},
 		config = function()
-			local colors = {
-				blue   = '#80a0ff',
-				cyan   = '#79dac8',
-				black  = '#080808',
-				white  = '#c6c6c6',
-				red    = '#ff5189',
-				violet = '#d183e8',
-				grey   = '#303030',
-			}
+			-- Use shared color utilities for complementary colors
+			local color_utils = require('config.color-utils')
+
+			-- Create solid color theme
+			local function create_solid_theme()
+				local accent = color_utils.get_accent_color()
+				local fg = color_utils.get_fg_color()
+				
+				-- Generate complementary colors from the accent
+				local colors = color_utils.generate_complementary_colors(accent)
+				
+				-- Create semi-transparent backgrounds for statusline
+				local status_bg = color_utils.adjust_opacity(accent, 0.5, "#1a1a1a")
+				local status_bg_inactive = color_utils.adjust_opacity(accent, 0.25, "#151515")
+
+				return {
+					normal = {
+						a = { fg = fg, bg = status_bg },
+						b = { fg = fg, bg = status_bg },
+						c = { fg = fg, bg = status_bg },
+						x = { fg = fg, bg = status_bg },
+						y = { fg = fg, bg = status_bg, gui = 'bold' },
+						z = { fg = fg, bg = status_bg, gui = 'bold' },
+					},
+					insert = { z = { bg = colors.success, fg = fg } },
+					visual = { z = { bg = colors.info, fg = fg } },
+					replace = { z = { bg = colors.error, fg = fg } },
+					terminal = { z = { bg = colors.info, fg = fg } },
+					command = { z = { bg = colors.warning, fg = fg } },
+					inactive = {
+						a = { fg = colors.fg_inactive, bg = status_bg_inactive },
+						b = { fg = colors.fg_inactive, bg = status_bg_inactive },
+						c = { fg = colors.fg_inactive, bg = status_bg_inactive },
+						x = { fg = colors.fg_inactive, bg = status_bg_inactive },
+						y = { fg = colors.fg_inactive, bg = status_bg_inactive },
+						z = { fg = colors.fg_inactive, bg = status_bg_inactive },
+					},
+				}
+			 end
+
 			require('lualine').setup({
 				options = {
 					icons_enabled = true,
-					theme = {
-						normal = {
-							a = { fg = colors.black, bg = colors.violet },
-							b = { fg = colors.white, bg = colors.grey },
-							c = { fg = colors.white },
-					},
-						insert = { a = { fg = colors.black, bg = colors.blue } },
-						visual = { a = { fg = colors.black, bg = colors.cyan } },
-						replace = { a = { fg = colors.black, bg = colors.red } },
-
-						inactive = {
-							a = { fg = colors.white, bg = colors.black },
-							b = { fg = colors.white, bg = colors.black },
-							c = { fg = colors.white },
-						},
-					},
+					theme = create_solid_theme(),
 					-- use rounded bubble-type separators
 					component_separators = "",
-					section_separators = { left = '', right = '' },
+					section_separators = { left = '', right = '' },
 				},
 				sections = {
-					lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
-					lualine_b = { 'filename', 'branch' },
-					lualine_c = {
-						'%=', --[[ add your center components here in place of this comment ]]
+					lualine_a = {
+						{
+							'branch',
+							icon = '',
+						},
+						'filename',
 					},
-					lualine_x = { { function() return require("istrupin.companion_lualine") end } },
-					lualine_y = { 'filetype', 'progress' },
+					lualine_b = {
+						{
+							function()
+								return "%="
+							end,
+						},
+					},
+					lualine_c = {
+					},
+					lualine_x = {
+						{
+							"diagnostics",
+							sources = { "nvim_diagnostic" },
+							symbols = { error = " ", warn = " ", info = " " },
+						},
+						'codecompanion',
+					},
+					lualine_y = {
+						'filetype',
+					},
 					lualine_z = {
-						{ 'location', separator = { right = '' }, left_padding = 2 },
+						{
+							'mode',
+							separator = { right = '' },
+							right_padding = 0,
+						}
 					},
 				},
 				inactive_sections = {
@@ -60,6 +101,14 @@ return {
 				tabline = {},
 				extensions = {}
 			})
+
+			-- Expose a function to refresh lualine theme
+			_G.refresh_lualine = function()
+				local lualine = require('lualine')
+				local config = lualine.get_config()
+				config.options.theme = create_solid_theme()
+				lualine.setup(config)
+			end
 		end
 	}
 }

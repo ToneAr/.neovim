@@ -28,15 +28,6 @@ return {
 				},
 				blacklist = {},
 			}
-
-			vim.cmd([[
-				highlight RainbowDelimiterOne    guifg=#5fd4a3
-				highlight RainbowDelimiterTwo    guifg=#6fc7d3
-				highlight RainbowDelimiterThree  guifg=#6e95dd
-				highlight RainbowDelimiterFour   guifg=#8381f1
-				highlight RainbowDelimiterFive   guifg=#8c5fd4
-				highlight RainbowDelimiterSix    guifg=#cb6edd
-			]])
 		end,
 	},
 	{
@@ -58,12 +49,12 @@ return {
 					}
 				},
 				guifgs = {
-					'#5fd4a3',
-					'#6fc7d3',
-					'#6e95dd',
-					'#8381f1',
-					'#8c5fd4',
-					'#cb6edd'
+					'RainbowDelimiterOne',
+					'RainbowDelimiterTwo',
+					'RainbowDelimiterThree',
+					'RainbowDelimiterFour',
+					'RainbowDelimiterFive',
+					'RainbowDelimiterSix',
 				},
 				strict = true,
 				tailwind = true,

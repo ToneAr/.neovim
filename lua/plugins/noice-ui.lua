@@ -10,17 +10,38 @@ return {
 					-- ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
 				},
 			},
+			routes = {
+				{
+					filter = {
+						event = "notify",
+						find = "NO_RESULT_CALLBACK_FOUND",
+					},
+					opts = { skip = true },
+				},
+				{
+					filter = {
+						event = "notify",
+						min_height = 1,
+					},
+					view = "notify",
+				},
+			},
+			views = {
+				notify = {
+					backend = "notify",
+				},
+			},
 			cmdline = {
 			enabled = true,
 			view = "cmdline_popup",
 			opts = {},
 				format = {
-				cmdline = { pattern = "^:", icon = "", lang = "vim" },
-				search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
-				search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
+				cmdline = { pattern = "^:", icon = "", lang = "vim" },
+				search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
+				search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
 				filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
-				lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
-				help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
+				lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
+				help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
 				input = { view = "cmdline_input", icon = "󰥻 " },
 			},
 			},
@@ -30,9 +51,8 @@ return {
 			{
 				"rcarriga/nvim-notify",
 				opts = {
-					level = 'warn',
 					background_color = "#000000"
-				}
+				},
 				-- branch = "fix/fix_index_value",
 			},
 		}

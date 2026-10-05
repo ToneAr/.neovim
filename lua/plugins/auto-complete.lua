@@ -6,8 +6,9 @@ return {
 	},
 	{
 		'saghen/blink.cmp',
-		build = 'cargo build --release',
+		build = function() require('blink.cmp').build():pwait() end,
 		dependencies = {
+			'saghen/blink.lib',
 			'rafamadriz/friendly-snippets',
 			-- 'frankroeder/parrot.nvim',
 			{
@@ -20,6 +21,9 @@ return {
 			'huijiro/blink-cmp-supermaven',
 			'saghen/blink.compat',
 			'giuxtaposition/blink-cmp-copilot'
+		},
+		preload = {
+
 		},
 		opts_extend = {
 			"sources.completion.enabled_providers",
@@ -58,39 +62,37 @@ return {
 					auto_brackets = {
 						enabled = true,
 						override_brackets_for_filetypes = {
-							blocked_filetypes = {
-								'sql', 'ruby', 'perl', 'lisp', 'scheme', 'clojure',
-								'prolog', 'vb', 'elixir', 'smalltalk', 'applescript',
-								'elm', 'rust', 'nu', 'cpp', 'fennel', 'janet', 'ps1',
-								'racket'
-							},
-							per_filetype = {
-								-- languages with a space
-								haskell = { ' ', '' },
-								fsharp = { ' ', '' },
-								ocaml = { ' ', '' },
-								erlang = { ' ', '' },
-								tcl = { ' ', '' },
-								nix = { ' ', '' },
-								helm = { ' ', '' },
-								lean = { ' ', '' },
-								shell = { ' ', '' },
-								sh = { ' ', '' },
-								bash = { ' ', '' },
-								fish = { ' ', '' },
-								zsh = { ' ', '' },
-								powershell = { ' ', '' },
-								make = { ' ', '' },
+							-- blocked filetypes (no auto brackets)
+							sql = {}, ruby = {}, perl = {}, lisp = {}, scheme = {},
+							clojure = {}, prolog = {}, vb = {}, elixir = {}, smalltalk = {},
+							applescript = {}, elm = {}, rust = {}, nu = {}, cpp = {},
+							fennel = {}, janet = {}, ps1 = {}, racket = {},
 
-								-- languages with square brackets
-								wl = { '[', ']' },
-								wolfram = { '[', ']' },
-								context = { '[', ']' },
+							-- languages with a space
+							haskell = { ' ', '' },
+							fsharp = { ' ', '' },
+							ocaml = { ' ', '' },
+							erlang = { ' ', '' },
+							tcl = { ' ', '' },
+							nix = { ' ', '' },
+							helm = { ' ', '' },
+							lean = { ' ', '' },
+							shell = { ' ', '' },
+							sh = { ' ', '' },
+							bash = { ' ', '' },
+							fish = { ' ', '' },
+							zsh = { ' ', '' },
+							powershell = { ' ', '' },
+							make = { ' ', '' },
 
-								-- languages with curly brackets
-								tex = { '{', '}' },
-								plaintex = { '{', '}' },
-							}
+							-- languages with square brackets
+							wl = { '[', ']' },
+							wolfram = { '[', ']' },
+							context = { '[', ']' },
+
+							-- languages with curly brackets
+							tex = { '{', '}' },
+							plaintex = { '{', '}' },
 						}
 					},
 				},
@@ -132,7 +134,7 @@ return {
 					},
 				},
 			},
-			fuzzy = { implementation = "prefer_rust_with_warning" }
+			-- fuzzy = { implementation = "rust" }
 		},
 	},
 	config = function(_, opts)

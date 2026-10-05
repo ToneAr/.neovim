@@ -1,7 +1,7 @@
 --- @type vim.lsp.Config
 return {
 	name = "wl_lsp",
-	cmd= {
+	cmd = {
 		"wolframscript",
 		"-noinit",
 		"-noprompt",

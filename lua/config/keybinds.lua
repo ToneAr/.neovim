@@ -31,6 +31,11 @@ vim.keymap.set({"n", "i", "v"},           -- Force Quit Nvim
 	{ noremap = true, silent = true }
 )
 vim.keymap.set("n",
+	"<leader>d",
+	":bd<CR>",
+	{ noremap = true, silent = true }
+)
+vim.keymap.set("n",
 	"<leader>h",          -- Horizontal Split
 	function() vim.cmd("split") end
 )
@@ -56,6 +61,11 @@ vim.keymap.set("n",
 	"caw",
 	{ noremap = true, silent = true }
 )
+vim.keymap.set("n",
+	"<C-S-f>",
+	":%s@@@g",
+	{ noremap = true }
+)
 
 -- Tab Bar
 local opts = { noremap = true, silent = true }
@@ -79,6 +89,13 @@ vim.keymap.set('n', '<A-8>', '<Cmd>BufferGoto 8<CR>', opts)
 vim.keymap.set('n', '<A-9>', '<Cmd>BufferGoto 9<CR>', opts)
 vim.keymap.set('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
 
+
+-- Session Manager
+local persistence = require("persistence")
+vim.keymap.set("n", "<leader>qs", function() persistence.load() end)
+vim.keymap.set("n", "<leader>qS", function() persistence.select() end)
+vim.keymap.set("n", "<leader>ql", function() persistence.load({ last = true }) end)
+vim.keymap.set("n", "<leader>qd", function() persistence.stop() end)
 
 -- Docker
 vim.keymap.set({ 'n', 't' },
@@ -107,3 +124,16 @@ vim.keymap.set("v", "<C-i>", ":'<,'>CodeCompanion<CR>", { noremap = true, silent
 
 -- Prettier
 vim.keymap.set("n", "<leader>kf", ":Prettier<CR>", { remap = true, silent = true })
+
+-- Theme Switcher
+local theme_switcher = require("config.theme-switcher")
+vim.keymap.set("n", "<leader>th", theme_switcher.pick_theme, { noremap = true, silent = true, desc = "Pick theme" })
+vim.keymap.set("n", "<leader>tn", theme_switcher.next_theme, { noremap = true, silent = true, desc = "Next theme" })
+vim.keymap.set("n", "<leader>tp", theme_switcher.prev_theme, { noremap = true, silent = true, desc = "Previous theme" })
+vim.keymap.set("n", "<leader>tr", function()
+	if vim.g.colors_name == "system-accent" then
+		require("config.system-theme").refresh()
+	else
+		vim.notify("System accent refresh only works with System Accent theme", vim.log.levels.WARN)
+	end
+end, { noremap = true, silent = true, desc = "Refresh system accent" })

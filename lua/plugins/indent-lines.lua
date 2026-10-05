@@ -2,7 +2,7 @@ return {
 	{ "lukas-reineke/virt-column.nvim",
 		opts = {
 			char = "│",
-			virtcolumn = "+1,120",
+			virtcolumn = "80,100",
 			exclude = {
 				filetypes = {
 					"alpha", "oil", "markdown", "codecompanion"
@@ -17,6 +17,13 @@ return {
 			indent = {
 				char = "▎",
 				tab_char = "▎",
+				highlight = "IblIndent",
+			},
+			whitespace = {
+				highlight = "IblWhitespace",
+			},
+			scope = {
+				enabled = false,
 			}
 		},
 		config = function (_, opts)

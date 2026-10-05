@@ -2,6 +2,7 @@ return {
 	{
 		"MunifTanjim/prettier.nvim",
 		ft = { "javascript", "typescript", "css", "scss", "less", "vue", "json", "yaml", "markdown", "html" },
+		dependencies = { "nvimtools/none-ls.nvim" },
 		opts = {
 			cli_options = {
 				end_of_line = "lf",
@@ -9,14 +10,12 @@ return {
 				use_tabs = true,
 			}
 		},
-		config = function()
-			vim.g["prettier#config#autoformat_config_present"] = 1
-			vim.g["prettier#config#autofromat_require_pragma"] = 0
-			vim.g["prettier#config#exec_cmd_async"] = 1
+		config = function(_, opts)
+			require("prettier").setup(opts)
 		end,
 	},
 	{
-		"jose-elias-alvarez/null-ls.nvim",
+		"nvimtools/none-ls.nvim",
 		config = function (_, opts)
 			local null_ls = require("null-ls")
 
