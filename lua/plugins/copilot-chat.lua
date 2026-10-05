@@ -10,11 +10,11 @@ return {
 			strategies = {
 				chat = {
 					adapter = {
-						name = "anthropic",
-						model = "claude-opus-4-5"
+						name = "openai",
+						model = "gpt-5.6-sol"
 					}
 				},
-				inline = {
+			inline = {
 					adapter = {
 						name = "anthropic",
 						model = "claude-haiku-4-5",

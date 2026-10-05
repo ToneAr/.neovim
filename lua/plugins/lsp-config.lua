@@ -23,6 +23,10 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			-- Enhance capabilities with semantic tokens support
 			capabilities.textDocument = capabilities.textDocument or {}
+			capabilities.textDocument.foldingRange = {
+				dynamicRegistration = false,
+				lineFoldingOnly = true,
+			}
 			capabilities.textDocument.semanticTokens = {
 				dynamicRegistration = true,
 				tokenTypes = {
@@ -46,30 +50,24 @@ return {
 				serverCancellationSupport = true,
 				augmentsSyntaxTokens = true
 			}
-				require("mason-lspconfig").setup({
-					automatic_installation = true,
-					handlers = {
-						function(name)
-							vim.lsp.config[name] = {
-								capabilities = capabilities,
-							}
-							vim.lsp.enable(name)
-						end,
-						['lua_ls'] = function()
-							vim.lsp.config.lua_ls = {
-								capabilities = capabilities,
-								settings = {
-									Lua = {
-										diagnostics = {
-											globals = { "vim" }
-										}
-									}
-								}
-							}
-							vim.lsp.enable('lua_ls')
-						end
-					}
-				})
+			-- Neovim 0.11+ configures and enables LSPs natively.  Mason enables
+			-- installed servers automatically, so configure shared capabilities first.
+			vim.lsp.config("*", { capabilities = capabilities })
+			vim.lsp.config("wl_lsp", { capabilities = capabilities })
+			vim.lsp.config("lua_ls", {
+				settings = {
+					Lua = {
+						diagnostics = { globals = { "vim" } },
+					},
+				},
+			})
+			vim.lsp.enable("wl_lsp")
+
+			require("mason-lspconfig").setup({
+				automatic_enable = {
+					exclude = { "bqls" },
+				},
+			})
 				
 				-- Set up global autocmd for Wolfram Language semantic highlighting
 				vim.api.nvim_create_augroup("WolframSemanticTokens", { clear = true })

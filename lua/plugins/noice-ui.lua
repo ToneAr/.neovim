@@ -14,6 +14,13 @@ return {
 				{
 					filter = {
 						event = "notify",
+						find = "NO_RESULT_CALLBACK_FOUND",
+					},
+					opts = { skip = true },
+				},
+				{
+					filter = {
+						event = "notify",
 						min_height = 1,
 					},
 					view = "notify",

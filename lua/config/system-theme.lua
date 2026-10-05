@@ -9,7 +9,7 @@ local accent_watcher_timer = nil
 -- Get system accent color
 local function get_system_accent()
 	-- Try KDE Plasma accent color (most reliable)
-	local handle = io.popen("kreadconfig5 --file kdeglobals --group General --key AccentColor 2>/dev/null")
+	local handle = io.popen("kreadconfig6 --file kdeglobals --group General --key AccentColor 2>/dev/null")
 	if handle then
 		local result = handle:read("*a")
 		handle:close()

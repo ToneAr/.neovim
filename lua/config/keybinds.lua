@@ -91,10 +91,11 @@ vim.keymap.set('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
 
 
 -- Session Manager
-vim.keymap.set("n", "<leader>qs", function() require("persistence").load() end)
-vim.keymap.set("n", "<leader>qS", function() require("persistence").select() end)
-vim.keymap.set("n", "<leader>ql", function() require("persistence").load({ last = true }) end)
-vim.keymap.set("n", "<leader>qd", function() require("persistence").stop() end)
+local persistence = require("persistence")
+vim.keymap.set("n", "<leader>qs", function() persistence.load() end)
+vim.keymap.set("n", "<leader>qS", function() persistence.select() end)
+vim.keymap.set("n", "<leader>ql", function() persistence.load({ last = true }) end)
+vim.keymap.set("n", "<leader>qd", function() persistence.stop() end)
 
 -- Docker
 vim.keymap.set({ 'n', 't' },
