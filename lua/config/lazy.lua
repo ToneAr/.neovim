@@ -32,4 +32,6 @@ require("lazy").setup({
 	install = { colorscheme = { "habamax" } },
 	-- automatically check for plugin updates
 	checker = { enabled = true },
+	-- hererocks can't build Lua on NixOS; use the luarocks + lua5_1 from nixpkgs
+	rocks = { hererocks = false },
 })

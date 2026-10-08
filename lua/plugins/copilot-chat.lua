@@ -7,12 +7,29 @@ return {
 			"ravitemer/mcphub.nvim"
 		},
 		opts = {
+			adapters = {
+				acp = {
+					claude_code = function()
+						return require("codecompanion.adapters").extend("claude_code", {
+							env = {
+								-- token from `claude setup-token` (Claude Pro/Max)
+								CLAUDE_CODE_OAUTH_TOKEN = "file:~/.config/claude-code-oauth-token",
+							},
+						})
+					end,
+					codex = function()
+						return require("codecompanion.adapters").extend("codex", {
+							defaults = {
+								-- uses the ChatGPT login from `codex login`
+								auth_method = "chat-gpt",
+							},
+						})
+					end,
+				},
+			},
 			strategies = {
 				chat = {
-					adapter = {
-						name = "openai",
-						model = "gpt-5.6-sol"
-					}
+					adapter = "claude_code",
 				},
 			inline = {
 					adapter = {

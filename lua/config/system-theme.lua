@@ -495,6 +495,12 @@ function M.setup(opts)
 		NotifyDEBUGTitle = { fg = colors.hint },
 		NotifyTRACETitle = { fg = colors.accent },
 
+		-- Oil (all icons share OilIcon, see plugins/file-explorer.lua)
+		OilIcon = { fg = colors.accent },
+		OilDir = { fg = colors.accent, bold = true },
+		OilDirIcon = { fg = colors.accent },
+		Directory = { fg = colors.accent },
+
 		-- Lazy
 		lazyRainbow_lv0_r0 = { fg = colors.bg },
 
@@ -748,7 +754,10 @@ end
 
 -- Start watching for system accent changes
 function M.start_watching()
-	-- Check every 5 seconds for accent color changes
+	-- setup() calls this on every reload, so drop any previous timer first
+	M.stop_watching()
+
+	-- Check every 3 seconds for accent color changes
 	local check_interval = 3000
 
 	local timer = vim.loop.new_timer()
