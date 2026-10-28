@@ -9,7 +9,9 @@ vim.opt.termguicolors = true
 
 vim.o.list = true                            -- Show whitespace characters
 vim.o.listchars = 'tab: ,lead:·,trail:·'    -- Whitespace character markers
-vim.opt.shell = 'fish'                       -- Set default terminal shell
+if vim.fn.executable('fish') == 1 then
+	vim.opt.shell = 'fish'                   -- Set default terminal shell
+end
 vim.wo.relativenumber = true                 -- Relative Line numbers
 vim.wo.number = true                         -- Absolute Line number
 vim.o.laststatus = 3                         -- Global statusline

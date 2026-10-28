@@ -63,3 +63,16 @@ many other features.
 	- Jira & Stash (WIP)
 
 
+
+## macOS
+- **System theme**
+	The `System (Dynamic)` theme reads the macOS accent colour
+	(System Settings → Appearance → Accent colour) and updates within a few
+	seconds when it changes. "Multicolour" is treated as blue.
+- **Alt/Meta keybinds**
+	Keybinds such as `<M-h>`/`<M-l>` need the Option key to send Meta. Enable
+	"Use Option as Meta key" in Terminal.app, set Left Option to "Esc+" in
+	iTerm2, or `macos_option_as_alt yes` in kitty.
+- **Wolfram LSP**
+	`wolframscript` is found on `PATH`, or inside `/Applications/Wolfram.app`
+	(also `Mathematica.app` and `Wolfram Engine.app`).

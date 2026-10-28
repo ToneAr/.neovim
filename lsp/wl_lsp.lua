@@ -1,8 +1,24 @@
+-- wolframscript is often not on PATH on macOS, so look inside the app bundles
+local function find_wolframscript()
+	if vim.fn.executable("wolframscript") == 1 then
+		return "wolframscript"
+	end
+	if vim.fn.has("mac") == 1 then
+		for _, app in ipairs({ "Wolfram", "Mathematica", "Wolfram Engine", "WolframScript" }) do
+			local path = "/Applications/" .. app .. ".app/Contents/MacOS/wolframscript"
+			if vim.fn.executable(path) == 1 then
+				return path
+			end
+		end
+	end
+	return "wolframscript"
+end
+
 --- @type vim.lsp.Config
 return {
 	name = "wl_lsp",
 	cmd = {
-		"wolframscript",
+		find_wolframscript(),
 		"-noinit",
 		"-noprompt",
 		"-nopaclet",

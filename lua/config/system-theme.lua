@@ -6,8 +6,35 @@ local utils = require("config.color-utils")
 -- Module-level storage for timer (can't store in vim.g)
 local accent_watcher_timer = nil
 
--- Get system accent color
-local function get_system_accent()
+local is_macos = vim.fn.has("mac") == 1
+
+-- macOS accent colors, keyed by the AppleAccentColor value
+local macos_colors = {
+	["-1"] = "#8c8c8c", -- Graphite
+	["0"] = "#ff5257",  -- Red
+	["1"] = "#f7821b",  -- Orange
+	["2"] = "#ffc600",  -- Yellow
+	["3"] = "#62ba46",  -- Green
+	["4"] = "#007aff",  -- Blue
+	["5"] = "#a550a7",  -- Purple
+	["6"] = "#f74f9e",  -- Pink
+}
+
+-- Get macOS accent color (System Settings > Appearance > Accent colour)
+local function get_macos_accent()
+	local handle = io.popen("defaults read -g AppleAccentColor 2>/dev/null")
+	if not handle then
+		return nil
+	end
+	local result = handle:read("*a")
+	handle:close()
+	result = result and result:gsub("%s+", "") or ""
+	-- Key is unset when "Multicolour" is selected, which renders as blue
+	return macos_colors[result] or macos_colors["4"]
+end
+
+-- Get Linux desktop accent color (KDE, GNOME, GTK)
+local function get_linux_accent()
 	-- Try KDE Plasma accent color (most reliable)
 	local handle = io.popen("kreadconfig6 --file kdeglobals --group General --key AccentColor 2>/dev/null")
 	if handle then
@@ -68,6 +95,21 @@ local function get_system_accent()
 		if color then
 			return color
 		end
+	end
+
+	return nil
+end
+
+-- Get system accent color
+local function get_system_accent()
+	local color
+	if is_macos then
+		color = get_macos_accent()
+	else
+		color = get_linux_accent()
+	end
+	if color then
+		return color
 	end
 
 	-- Fallback: Try to detect from current terminal colors
