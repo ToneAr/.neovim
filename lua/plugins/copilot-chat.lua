@@ -19,17 +19,29 @@ return {
 					end,
 				},
 			},
-			strategies = {
+			-- Default every interaction to Claude (otherwise CodeCompanion uses Copilot)
+			interactions = {
 				chat = {
 					adapter = "claude_code",
 				},
-			inline = {
+				inline = {
 					adapter = {
 						name = "anthropic",
 						model = "claude-haiku-4-5",
-					}
-
-				}
+					},
+				},
+				cmd = {
+					adapter = {
+						name = "anthropic",
+						model = "claude-haiku-4-5",
+					},
+				},
+				background = {
+					adapter = {
+						name = "anthropic",
+						model = "claude-haiku-4-5",
+					},
+				},
 			},
 			extensions = {
 				mcphub = {

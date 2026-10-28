@@ -10,6 +10,7 @@ return {
 		dependencies = {
 			'saghen/blink.lib',
 			'rafamadriz/friendly-snippets',
+			'milanglacier/minuet-ai.nvim',
 			-- 'frankroeder/parrot.nvim',
 			'saghen/blink.compat',
 		},
@@ -104,9 +105,16 @@ return {
 			},
 			sources = {
 				default = {
-					'lsp', 'path', 'snippets', 'buffer'
+					'lsp', 'path', 'snippets', 'buffer', 'minuet'
 				},
 				providers = {
+					minuet = {
+						name = "minuet",
+						module = "minuet.blink",
+						async = true,
+						timeout_ms = 3000,
+						score_offset = 20,
+					},
 					-- parrot = {
 					-- 	module = "parrot.completion.blink",
 					-- 	name = "parrot",

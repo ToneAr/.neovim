@@ -10,6 +10,9 @@ many other features.
 - **Auto-Completion**
 	Auto-Completion has been set up using the rust based `blink.cmp` for quick
 	autocompletion and function information retrieval.
+- **AI Auto-Completion**
+	Claude completions (via `minuet-ai.nvim`, model `claude-haiku-5-5`) appear in
+	the `blink.cmp` menu. Requires `ANTHROPIC_API_KEY` to be set.
 - **AI Companion**
 	A Claude Code AI companion (via CodeCompanion) has been included to provide:
 	- `<C-M-i>` - Side chat (with tool and file access)
