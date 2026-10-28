@@ -10,12 +10,8 @@ many other features.
 - **Auto-Completion**
 	Auto-Completion has been set up using the rust based `blink.cmp` for quick
 	autocompletion and function information retrieval.
-- **AI Auto-Completion**
-	Auto-Completion has been set up with `supermaven` and should work out of the
-	box and has been integrated with the `blink.cmp` autocompletion menu.
 - **AI Companion**
-	A full copilot-style AI companion has been included which can use your own API
-	keys to provide:
+	A Claude Code AI companion (via CodeCompanion) has been included to provide:
 	- `<C-M-i>` - Side chat (with tool and file access)
 	- `<C-i>`   - Inline chat (editing and questions)
 - **Telescope navigaiton**

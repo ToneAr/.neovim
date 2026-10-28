@@ -11,16 +11,7 @@ return {
 			'saghen/blink.lib',
 			'rafamadriz/friendly-snippets',
 			-- 'frankroeder/parrot.nvim',
-			{
-				'supermaven-inc/supermaven-nvim',
-				opts = {
-					disable_inline_completion = true,
-					disable_keymaps = true,
-				}
-			},
-			'huijiro/blink-cmp-supermaven',
 			'saghen/blink.compat',
-			'giuxtaposition/blink-cmp-copilot'
 		},
 		preload = {
 
@@ -113,9 +104,8 @@ return {
 			},
 			sources = {
 				default = {
-					'lsp', 'path', 'snippets', 'buffer', 'supermaven'
+					'lsp', 'path', 'snippets', 'buffer'
 				},
-				-- compat = { 'supermaven'},
 				providers = {
 					-- parrot = {
 					-- 	module = "parrot.completion.blink",
@@ -126,12 +116,6 @@ return {
 					-- 		max_items = 50,
 					-- 	},
 					-- },
-					supermaven = {
-						module = "blink-cmp-supermaven",
-						name = "supermaven",
-						score_offset = 20,
-						async = true,
-					},
 				},
 			},
 			-- fuzzy = { implementation = "rust" }

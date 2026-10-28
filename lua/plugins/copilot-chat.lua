@@ -17,14 +17,6 @@ return {
 							},
 						})
 					end,
-					codex = function()
-						return require("codecompanion.adapters").extend("codex", {
-							defaults = {
-								-- uses the ChatGPT login from `codex login`
-								auth_method = "chat-gpt",
-							},
-						})
-					end,
 				},
 			},
 			strategies = {
@@ -95,27 +87,6 @@ return {
 	-- 						end
 	-- 						return payload
 	-- 					end,
-	-- 				},
-	-- 				openai = {
-	-- 					name = "openai",
-	-- 					api_key = os.getenv("OPENAI_API_KEY"),
-	-- 					endpoint = "https://api.openai.com/v1/chat/completions",
-	-- 					params = {
-	-- 						chat = { temperature = 1, top_p = 1 },
-	-- 						command = { temperature = 1, top_p = 1 },
-	-- 					},
-	-- 					topic = {
-	-- 						model = "gpt-4.1-nano",
-	-- 						params = { max_completion_tokens = 64 },
-	-- 					},
-	-- 					models ={
-	-- 						"gpt-5",
-	-- 						"gpt-5-mini",
-	-- 						"gpt-4.1",
-	-- 						"gpt-4o",
-	-- 						"o4-mini",
-	-- 						"gpt-4.1-nano",
-	-- 					}
 	-- 				},
 	-- 			},
 	-- 		}
